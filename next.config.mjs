@@ -3,8 +3,9 @@ const nextConfig = {
   // Other Next.js config option
   reactStrictMode: true,
 
-  // Enable static exports
-  output: 'export',
+  // Note: For admin panel + API routes, we need to use server-side rendering
+  // We'll set this in environment specific configurations
+  output: process.env.EXPORT_MODE === 'true' ? 'export' : undefined,
   distDir: 'out',
 
   // Configure images for static export
@@ -17,6 +18,9 @@ const nextConfig = {
         hostname: '**',
       },
     ],
+    dangerouslyAllowSVG: true,
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    disableStaticImages: false,
   },
   typescript: {
     // !! WARN !!
