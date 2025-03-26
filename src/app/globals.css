@@ -36,3 +36,12 @@
     @apply font-[var(--font-rubik)];
   }
 }
+
+@keyframes subtle-parallax {
+  0% { transform: translateY(-20px); }
+  100% { transform: translateY(0); }
+}
+
+.animate-subtle-parallax {
+  animation: subtle-parallax 4s ease-out forwards;
+}
