@@ -9,33 +9,33 @@ import { motion } from "framer-motion";
 const testimonialsData = [
   {
     quote: "The dual degree program at Islamic Da'wa Academy transformed my life. I was able to deepen my understanding of the Quran while also earning a degree in Computer Science. The IT facilities here are exceptional.",
-    name: "Abdullah Rahman",
+    name: "Hafiz Yaseen",
     position: "Graduate, Class of 2023",
-    image: "https://randomuser.me/api/portraits/men/32.jpg"
+    image: "/images/student1.jpg"
   },
   {
     quote: "As a Hafiz, I was looking for an institution that would value my Quranic knowledge while providing modern education. The Islamic Da'wa Academy exceeded my expectations with its balanced approach to education.",
-    name: "Fatima Zahra",
+    name: "Hafiz Naseef",
     position: "Current Student, Islamic Studies & Media",
-    image: "https://randomuser.me/api/portraits/women/44.jpg"
+    image: "/images/student1.jpg"
   },
   {
     quote: "Teaching at Islamic Da'wa Academy has been a fulfilling experience. The students here are exceptionally dedicated, and the administration's commitment to maintaining high standards in both Islamic and secular education is commendable.",
-    name: "Dr. Omar Farooq",
+    name: "Hafiz Abdullah Mikdad",
     position: "Professor of Islamic Jurisprudence",
-    image: "https://randomuser.me/api/portraits/men/46.jpg"
+    image: "/images/student1.jpg"
   },
   {
     quote: "The production studio and media training facilities at the academy prepared me for a career in Islamic media. I now produce educational content that reaches thousands of Muslims worldwide.",
-    name: "Amina Siddiqui",
+    name: "Hafiz Ibrahim",
     position: "Alumni, Media Production Graduate",
-    image: "https://randomuser.me/api/portraits/women/65.jpg"
+    image: "/images/student1.jpg"
   },
   {
     quote: "What sets Islamic Da'wa Academy apart is its holistic approach to education. Here, I learned not just about my faith, but also acquired practical skills that have made me self-sufficient and able to serve my community better.",
-    name: "Yusuf Ibrahim",
+    name: "Hafiz Lubab",
     position: "Graduate, Islamic Studies & Business",
-    image: "https://randomuser.me/api/portraits/men/79.jpg"
+    image: "/images/student1.jpg"
   }
 ];
 
