@@ -174,7 +174,7 @@ const Footer = () => {
             </div>
           </div>
           <p className="mt-4 text-center text-sm text-[#D4A017] font-[var(--font-dm-sans)]">
-            Powered by <span className="font-semibold">Akode Islamic Centre</span>
+          <span className="text-white"> Run by</span>  <span className="font-semibold">Akode Islamic Centre</span>
           </p>
         </motion.div>
       </div>
