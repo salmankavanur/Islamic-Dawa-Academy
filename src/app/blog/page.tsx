@@ -15,6 +15,8 @@ async function fetchBlogPosts() {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
     const url = `${baseUrl}/api/admin/blog?published=true`;
     console.log('Fetching from:', url);
+    // const res = await fetch("/api/admin/blog?published=true", { cache: 'no-store' });
+
     const res = await fetch(url, { cache: 'no-store' });
 
     if (!res.ok) {
