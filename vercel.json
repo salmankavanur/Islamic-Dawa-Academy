@@ -2,7 +2,7 @@
     "version": 2,
     "builds": [
       {
-        "src": "./package.json",
+        "src": "package.json",
         "use": "@vercel/next"
       }
     ],
@@ -11,6 +11,7 @@
       { "src": "/(.*)", "dest": "/$1" }
     ],
     "env": {
-      "MONGODB_URI": "mongodb://digibayt.com:27313/dawaacademy"
+      "NEXT_PUBLIC_BASE_URL": "https://your-vercel-app.vercel.app",
+      "MONGODB_URI": "@mongodb_uri"
     }
   }
