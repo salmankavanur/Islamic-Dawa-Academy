@@ -1,8 +1,8 @@
-# Islamic Da'wa Academy Admin Panel Setup
+# 🌙 Islamic Da'wa Academy Admin Panel Setup
 
 This document provides instructions on how to set up and use the admin panel for managing the Islamic Da'wa Academy website content.
 
-## Overview
+## 📋 Overview
 
 The admin panel uses:
 - **MongoDB**: For storing structured content (blog posts, gallery items, etc.)
@@ -10,16 +10,16 @@ The admin panel uses:
 - **Next.js API Routes**: For handling CRUD operations
 - **NextAuth.js**: For authentication
 
-## Setup Instructions
+## 🚀 Setup Instructions
 
-### 1. Prerequisites
+### 1. 📝 Prerequisites
 
 - MongoDB Atlas account (or local MongoDB instance)
 - Supabase account
 - Node.js (v16+) 
 - Bun or npm
 
-### 2. Environment Variables
+### 2. 🔐 Environment Variables
 
 Copy the `.env.example` file to `.env.local`:
 
@@ -46,7 +46,7 @@ Fill in the required environment variables:
 - **Admin Credentials**:
   - Set `ADMIN_EMAIL` and `ADMIN_PASSWORD` for admin login
 
-### 3. Development Mode
+### 3. 💻 Development Mode
 
 Run the development server:
 
@@ -56,11 +56,11 @@ bun run dev
 
 Access the admin panel at: http://localhost:3000/admin/login
 
-### 4. Deployment
+### 4. 🚢 Deployment
 
 For deployment, you have two options:
 
-#### Option 1: Hybrid Deployment (Public content as static, Admin as server)
+#### Option 1: 🔄 Hybrid Deployment (Public content as static, Admin as server)
 
 This is the recommended approach. Set `EXPORT_MODE` to empty in your production environment:
 
@@ -68,7 +68,7 @@ This is the recommended approach. Set `EXPORT_MODE` to empty in your production 
 EXPORT_MODE=
 ```
 
-#### Option 2: Separate Admin and Public Sites
+#### Option 2: 🔀 Separate Admin and Public Sites
 
 You can deploy the public site as static content and the admin panel as a separate server application.
 
@@ -82,20 +82,20 @@ For admin site:
 EXPORT_MODE=
 ```
 
-## Usage Guide
+## 📘 Usage Guide
 
-### 1. Admin Login
+### 1. 🔑 Admin Login
 
 Access the admin panel at `/admin/login` and use the credentials set in your environment variables.
 
-### 2. Dashboard
+### 2. 📊 Dashboard
 
 The dashboard gives you an overview of your content:
 - Total blog posts
 - Total gallery items
 - Recent blog posts
 
-### 3. Blog Management
+### 3. 📝 Blog Management
 
 Access blog management at `/admin/blog`:
 - View all blog posts
@@ -104,7 +104,7 @@ Access blog management at `/admin/blog`:
 - Delete blog posts
 - Toggle featured status
 
-### 4. Gallery Management
+### 4. 🖼️ Gallery Management
 
 Access gallery management at `/admin/gallery`:
 - View all gallery items
@@ -113,7 +113,7 @@ Access gallery management at `/admin/gallery`:
 - Delete images
 - Rearrange images
 
-### 5. Media Upload
+### 5. 📤 Media Upload
 
 When creating blog posts or gallery items:
 1. Click the "Upload Image" button
@@ -121,9 +121,9 @@ When creating blog posts or gallery items:
 3. The image will be uploaded to Supabase storage
 4. The URL will be automatically inserted
 
-## Database Schema
+## 🗃️ Database Schema
 
-### Blog Posts Collection
+### 📋 Blog Posts Collection
 
 - `title`: String
 - `slug`: String (unique)
@@ -142,7 +142,7 @@ When creating blog posts or gallery items:
 - `createdAt`: Date
 - `updatedAt`: Date
 
-### Gallery Items Collection
+### 🖼️ Gallery Items Collection
 
 - `title`: String
 - `description`: String
@@ -154,7 +154,7 @@ When creating blog posts or gallery items:
 - `createdAt`: Date
 - `updatedAt`: Date
 
-## Security Considerations
+## 🔒 Security Considerations
 
 - The admin panel is protected by authentication
 - API routes are also protected by authentication
@@ -162,17 +162,39 @@ When creating blog posts or gallery items:
 - Use strong passwords for admin access
 - Regularly rotate your admin credentials
 
-## Troubleshooting
+## ❓ Troubleshooting
 
-**Issue**: Cannot connect to MongoDB
+**Issue**: Cannot connect to MongoDB  
 **Solution**: Verify your connection string and network settings
 
-**Issue**: Images not uploading to Supabase
+**Issue**: Images not uploading to Supabase  
 **Solution**: Check your Supabase credentials and storage bucket permissions
 
-**Issue**: Admin login not working
+**Issue**: Admin login not working  
 **Solution**: Verify your environment variables for admin credentials
 
-## Support
+## 📞 Support
 
 For additional support, please contact the development team.
+
+## ⚙️ Environment Variables Example
+
+```bash
+# MongoDB Connection
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/islamic-dawa-academy?retryWrites=true&w=majority
+
+# Supabase Configuration
+NEXT_PUBLIC_SUPABASE_URL=your-supabase-project-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
+
+# NextAuth Configuration
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=your-nextauth-secret-key
+
+# Admin Credentials
+ADMIN_EMAIL=admin@example.com
+ADMIN_PASSWORD=securepassword
+
+# Export Mode - Set to 'true' for static export, or leave empty for server mode
+# EXPORT_MODE=true
+```
