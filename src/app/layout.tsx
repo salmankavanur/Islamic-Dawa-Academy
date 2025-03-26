@@ -1,9 +1,9 @@
+// src/app/layout.tsx
 import type { Metadata } from "next";
 import { DM_Sans, Rubik, Amiri } from "next/font/google";
 import "./globals.css";
 import ClientBody from "./ClientBody";
 
-// Define fonts with specific weights and subsets
 const dmSans = DM_Sans({
   weight: ["400", "500", "700"],
   subsets: ["latin"],
@@ -24,13 +24,23 @@ const amiri = Amiri({
 
 export const metadata: Metadata = {
   title: "Islamic Da'wa Academy | Akode Islamic Centre",
-  description: "Higher Educational Institution for Huffaz with integrated dual degree studies in both Islamic studies and secular education from UGC Approved universities.",
-  keywords: ["Islamic Education", "Huffaz Education", "Dual Degree", "Islamic Studies", "Quran Memorization", "Media Training", "IT Education"],
+  description:
+    "Higher Educational Institution for Huffaz with integrated dual degree studies in both Islamic studies and secular education from UGC Approved universities.",
+  keywords: [
+    "Islamic Education",
+    "Huffaz Education",
+    "Dual Degree",
+    "Islamic Studies",
+    "Quran Memorization",
+    "Media Training",
+    "IT Education",
+  ],
   authors: [{ name: "Akode Islamic Centre" }],
   creator: "Akode Islamic Centre",
   openGraph: {
     title: "Islamic Da'wa Academy | Akode Islamic Centre",
-    description: "Higher Educational Institution for Huffaz with integrated dual degree studies",
+    description:
+      "Higher Educational Institution for Huffaz with integrated dual degree studies",
     url: "https://islamicdawaacademy.org",
     siteName: "Islamic Da'wa Academy",
     locale: "en_US",
@@ -40,14 +50,17 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en" className={`${dmSans.variable} ${rubik.variable} ${amiri.variable}`}>
-      <ClientBody>
-        {children}
-      </ClientBody>
+    <html
+      lang="en"
+      className={`${dmSans.variable} ${rubik.variable} ${amiri.variable}`}
+    >
+      <body className="antialiased">
+        <ClientBody>{children}</ClientBody>
+      </body>
     </html>
   );
 }
