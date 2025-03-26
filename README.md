@@ -1,36 +1,178 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Islamic Da'wa Academy Admin Panel Setup
 
-## Getting Started
+This document provides instructions on how to set up and use the admin panel for managing the Islamic Da'wa Academy website content.
 
-First, run the development server:
+## Overview
+
+The admin panel uses:
+- **MongoDB**: For storing structured content (blog posts, gallery items, etc.)
+- **Supabase**: For storing media files (images)
+- **Next.js API Routes**: For handling CRUD operations
+- **NextAuth.js**: For authentication
+
+## Setup Instructions
+
+### 1. Prerequisites
+
+- MongoDB Atlas account (or local MongoDB instance)
+- Supabase account
+- Node.js (v16+) 
+- Bun or npm
+
+### 2. Environment Variables
+
+Copy the `.env.example` file to `.env.local`:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cp .env.example .env.local
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Fill in the required environment variables:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **MongoDB**:
+  - Create a MongoDB Atlas cluster or use a local MongoDB instance
+  - Set `MONGODB_URI` with your connection string
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Supabase**:
+  - Create a new Supabase project
+  - Create storage buckets: `blog-images`, `gallery-images`
+  - Set public access policies for these buckets
+  - Set `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 
-## Learn More
+- **NextAuth**:
+  - Generate a random string for `NEXTAUTH_SECRET` (you can use `openssl rand -base64 32`)
+  - Set `NEXTAUTH_URL` to your website URL (use `http://localhost:3000` for development)
 
-To learn more about Next.js, take a look at the following resources:
+- **Admin Credentials**:
+  - Set `ADMIN_EMAIL` and `ADMIN_PASSWORD` for admin login
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 3. Development Mode
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Run the development server:
 
-## Deploy on Vercel
+```bash
+bun run dev
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Access the admin panel at: http://localhost:3000/admin/login
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 4. Deployment
+
+For deployment, you have two options:
+
+#### Option 1: Hybrid Deployment (Public content as static, Admin as server)
+
+This is the recommended approach. Set `EXPORT_MODE` to empty in your production environment:
+
+```bash
+EXPORT_MODE=
+```
+
+#### Option 2: Separate Admin and Public Sites
+
+You can deploy the public site as static content and the admin panel as a separate server application.
+
+For public site:
+```bash
+EXPORT_MODE=true
+```
+
+For admin site:
+```bash
+EXPORT_MODE=
+```
+
+## Usage Guide
+
+### 1. Admin Login
+
+Access the admin panel at `/admin/login` and use the credentials set in your environment variables.
+
+### 2. Dashboard
+
+The dashboard gives you an overview of your content:
+- Total blog posts
+- Total gallery items
+- Recent blog posts
+
+### 3. Blog Management
+
+Access blog management at `/admin/blog`:
+- View all blog posts
+- Create new blog posts
+- Edit existing blog posts
+- Delete blog posts
+- Toggle featured status
+
+### 4. Gallery Management
+
+Access gallery management at `/admin/gallery`:
+- View all gallery items
+- Upload new images
+- Edit image metadata
+- Delete images
+- Rearrange images
+
+### 5. Media Upload
+
+When creating blog posts or gallery items:
+1. Click the "Upload Image" button
+2. Select an image from your computer
+3. The image will be uploaded to Supabase storage
+4. The URL will be automatically inserted
+
+## Database Schema
+
+### Blog Posts Collection
+
+- `title`: String
+- `slug`: String (unique)
+- `content`: String (HTML)
+- `excerpt`: String
+- `image`: String (URL to Supabase)
+- `category`: String
+- `tags`: Array of Strings
+- `author`: String
+- `authorTitle`: String
+- `authorBio`: String
+- `authorImage`: String (optional, URL to Supabase)
+- `date`: String
+- `featured`: Boolean
+- `published`: Boolean
+- `createdAt`: Date
+- `updatedAt`: Date
+
+### Gallery Items Collection
+
+- `title`: String
+- `description`: String
+- `imageUrl`: String (URL to Supabase)
+- `category`: String
+- `tags`: Array of Strings
+- `featured`: Boolean
+- `order`: Number
+- `createdAt`: Date
+- `updatedAt`: Date
+
+## Security Considerations
+
+- The admin panel is protected by authentication
+- API routes are also protected by authentication
+- Supabase storage is configured with specific access policies
+- Use strong passwords for admin access
+- Regularly rotate your admin credentials
+
+## Troubleshooting
+
+**Issue**: Cannot connect to MongoDB
+**Solution**: Verify your connection string and network settings
+
+**Issue**: Images not uploading to Supabase
+**Solution**: Check your Supabase credentials and storage bucket permissions
+
+**Issue**: Admin login not working
+**Solution**: Verify your environment variables for admin credentials
+
+## Support
+
+For additional support, please contact the development team.
