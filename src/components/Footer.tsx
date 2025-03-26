@@ -3,26 +3,26 @@ import { Mail, Phone, MapPin, Facebook, Instagram, Twitter, Youtube } from "luci
 
 const Footer = () => {
   return (
-    <footer className="bg-green-900 text-white pt-16 pb-8">
-      <div className="container mx-auto px-4">
+    <footer className="bg-[#1A4D2E] text-white pt-16 pb-8">
+      <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* About Section */}
           <div>
-            <h3 className="text-xl font-bold mb-4">Islamic Da'wa Academy</h3>
-            <p className="text-gray-300 mb-4">
+            <h3 className="text-xl font-bold mb-4 font-['Rubik']">Islamic Da'wa Academy</h3>
+            <p className="text-[#F5F5F5] mb-4 font-['DM_Sans']">
               Higher Educational Institution for Huffaz with integrated dual degree studies in both Islamic studies and secular education from UGC Approved universities.
             </p>
             <div className="flex space-x-4">
-              <Link href="#" className="text-white hover:text-green-400 transition-colors">
+              <Link href="#" className="text-[#D4A017] hover:text-[#E5B828] transition-colors">
                 <Facebook className="h-5 w-5" />
               </Link>
-              <Link href="#" className="text-white hover:text-green-400 transition-colors">
+              <Link href="#" className="text-[#D4A017] hover:text-[#E5B828] transition-colors">
                 <Instagram className="h-5 w-5" />
               </Link>
-              <Link href="#" className="text-white hover:text-green-400 transition-colors">
+              <Link href="#" className="text-[#D4A017] hover:text-[#E5B828] transition-colors">
                 <Twitter className="h-5 w-5" />
               </Link>
-              <Link href="#" className="text-white hover:text-green-400 transition-colors">
+              <Link href="#" className="text-[#D4A017] hover:text-[#E5B828] transition-colors">
                 <Youtube className="h-5 w-5" />
               </Link>
             </div>
@@ -30,35 +30,35 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-xl font-bold mb-4">Quick Links</h3>
+            <h3 className="text-xl font-bold mb-4 font-['Rubik']">Quick Links</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/about" className="text-gray-300 hover:text-white transition-colors">
+                <Link href="/about" className="text-[#F5F5F5] hover:text-[#D4A017] transition-colors font-['DM_Sans']">
                   About Us
                 </Link>
               </li>
               <li>
-                <Link href="/programs" className="text-gray-300 hover:text-white transition-colors">
+                <Link href="/programs" className="text-[#F5F5F5] hover:text-[#D4A017] transition-colors font-['DM_Sans']">
                   Programs
                 </Link>
               </li>
               <li>
-                <Link href="/facilities" className="text-gray-300 hover:text-white transition-colors">
+                <Link href="/facilities" className="text-[#F5F5F5] hover:text-[#D4A017] transition-colors font-['DM_Sans']">
                   Facilities
                 </Link>
               </li>
               <li>
-                <Link href="/faculty" className="text-gray-300 hover:text-white transition-colors">
+                <Link href="/faculty" className="text-[#F5F5F5] hover:text-[#D4A017] transition-colors font-['DM_Sans']">
                   Faculty
                 </Link>
               </li>
               <li>
-                <Link href="/gallery" className="text-gray-300 hover:text-white transition-colors">
+                <Link href="/gallery" className="text-[#F5F5F5] hover:text-[#D4A017] transition-colors font-['DM_Sans']">
                   Gallery
                 </Link>
               </li>
               <li>
-                <Link href="/admissions" className="text-gray-300 hover:text-white transition-colors">
+                <Link href="/admissions" className="text-[#F5F5F5] hover:text-[#D4A017] transition-colors font-['DM_Sans']">
                   Admissions
                 </Link>
               </li>
@@ -67,30 +67,30 @@ const Footer = () => {
 
           {/* Program Links */}
           <div>
-            <h3 className="text-xl font-bold mb-4">Programs</h3>
+            <h3 className="text-xl font-bold mb-4 font-['Rubik']">Programs</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/programs/islamic-studies" className="text-gray-300 hover:text-white transition-colors">
+                <Link href="/programs/islamic-studies" className="text-[#F5F5F5] hover:text-[#D4A017] transition-colors font-['DM_Sans']">
                   Islamic Studies
                 </Link>
               </li>
               <li>
-                <Link href="/programs/quran-memorization" className="text-gray-300 hover:text-white transition-colors">
+                <Link href="/programs/quran-memorization" className="text-[#F5F5F5] hover:text-[#D4A017] transition-colors font-['DM_Sans']">
                   Quran Memorization
                 </Link>
               </li>
               <li>
-                <Link href="/programs/dual-degree" className="text-gray-300 hover:text-white transition-colors">
+                <Link href="/programs/dual-degree" className="text-[#F5F5F5] hover:text-[#D4A017] transition-colors font-['DM_Sans']">
                   Dual Degree Program
                 </Link>
               </li>
               <li>
-                <Link href="/programs/it-training" className="text-gray-300 hover:text-white transition-colors">
+                <Link href="/programs/it-training" className="text-[#F5F5F5] hover:text-[#D4A017] transition-colors font-['DM_Sans']">
                   IT Training
                 </Link>
               </li>
               <li>
-                <Link href="/programs/multimedia" className="text-gray-300 hover:text-white transition-colors">
+                <Link href="/programs/multimedia" className="text-[#F5F5F5] hover:text-[#D4A017] transition-colors font-['DM_Sans']">
                   Multimedia Production
                 </Link>
               </li>
@@ -99,33 +99,33 @@ const Footer = () => {
 
           {/* Contact Info */}
           <div>
-            <h3 className="text-xl font-bold mb-4">Contact Us</h3>
+            <h3 className="text-xl font-bold mb-4 font-['Rubik']">Contact Us</h3>
             <ul className="space-y-3">
               <li className="flex items-start">
-                <MapPin className="h-5 w-5 mr-2 mt-0.5 text-green-400" />
-                <span className="text-gray-300">
+                <MapPin className="h-5 w-5 mr-2 mt-0.5 text-[#D4A017]" />
+                <span className="text-[#F5F5F5] font-['DM_Sans']">
                   Akode Islamic Centre<br />
                   Campus Address Here<br />
                   City, State, ZIP
                 </span>
               </li>
               <li className="flex items-center">
-                <Phone className="h-5 w-5 mr-2 text-green-400" />
-                <span className="text-gray-300">+1 (123) 456-7890</span>
+                <Phone className="h-5 w-5 mr-2 text-[#D4A017]" />
+                <span className="text-[#F5F5F5] font-['DM_Sans']">+1 (123) 456-7890</span>
               </li>
               <li className="flex items-center">
-                <Mail className="h-5 w-5 mr-2 text-green-400" />
-                <span className="text-gray-300">info@islamicdawaacademy.org</span>
+                <Mail className="h-5 w-5 mr-2 text-[#D4A017]" />
+                <span className="text-[#F5F5F5] font-['DM_Sans']">info@islamicdawaacademy.org</span>
               </li>
             </ul>
           </div>
         </div>
 
-        <div className="border-t border-green-800 mt-12 pt-8 text-center text-gray-400">
+        <div className="border-t border-[#4A7C59] mt-12 pt-8 text-center text-[#F5F5F5] font-['DM_Sans']">
           <p>© {new Date().getFullYear()} Islamic Da'wa Academy. All rights reserved.</p>
           <p className="mt-2 text-sm">
             Powered by{" "}
-            <span className="text-green-400">Akode Islamic Centre</span>
+            <span className="text-[#D4A017]">Akode Islamic Centre</span>
           </p>
         </div>
       </div>

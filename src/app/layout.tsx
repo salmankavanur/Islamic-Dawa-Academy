@@ -1,16 +1,25 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { DM_Sans, Rubik, Amiri } from "next/font/google";
 import "./globals.css";
 import ClientBody from "./ClientBody";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// Define fonts with specific weights and subsets
+const dmSans = DM_Sans({
+  weight: ["400", "500", "700"],
   subsets: ["latin"],
+  variable: "--font-dm-sans",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const rubik = Rubik({
+  weight: ["400", "500", "700"],
   subsets: ["latin"],
+  variable: "--font-rubik",
+});
+
+const amiri = Amiri({
+  weight: ["400", "700"],
+  subsets: ["latin", "arabic"],
+  variable: "--font-amiri",
 });
 
 export const metadata: Metadata = {
@@ -35,7 +44,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="en" className={`${dmSans.variable} ${rubik.variable} ${amiri.variable}`}>
       <ClientBody>
         {children}
       </ClientBody>

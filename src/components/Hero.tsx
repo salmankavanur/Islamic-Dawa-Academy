@@ -3,29 +3,36 @@ import Link from "next/link";
 
 const Hero = () => {
   return (
-    <div className="relative min-h-[600px] bg-gradient-to-r from-green-900 to-green-700 flex items-center">
-      {/* Islamic Pattern Overlay - Semi-transparent */}
+    <div className="relative min-h-[600px] bg-gradient-to-r from-[#1A4D2E] to-[#4A7C59] flex items-center">
+      {/* Islamic Pattern Overlay */}
       <div
-        className="absolute inset-0 opacity-10 bg-repeat"
+        className="absolute inset-0 opacity-15 bg-repeat"
         style={{
           backgroundImage: "url('https://www.transparenttextures.com/patterns/arabesque.png')",
-          backgroundSize: "300px"
+          backgroundSize: "400px",
         }}
       ></div>
 
-      <div className="container mx-auto px-4 py-20 relative z-10">
+      <div className="container mx-auto px-6 py-20 relative z-10">
         <div className="max-w-3xl">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+          <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight font-['Rubik']">
             Nurturing Spiritual & Academic Excellence
           </h1>
-          <p className="text-xl text-gray-200 mb-8 leading-relaxed">
+          <p className="text-xl text-[#F5F5F5] mb-8 leading-relaxed font-['DM_Sans']">
             Islamic Da'wa Academy provides a unique educational environment where Huffaz can pursue dual degrees in Islamic studies and secular education from UGC approved universities.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
-            <Button size="lg" className="bg-white text-green-800 hover:bg-gray-100">
+            <Button
+              size="lg"
+              className="bg-[#D4A017] text-[#2D2D2D] hover:bg-[#E5B828] transition-all duration-300 rounded-lg font-['DM_Sans']"
+            >
               <Link href="/programs">Explore Programs</Link>
             </Button>
-            <Button size="lg" variant="outline" className="text-white border-white hover:bg-green-800 hover:text-white">
+            <Button
+              size="lg"
+              variant="outline"
+              className="text-white border-[#D4A017] hover:bg-[#4A7C59] hover:text-white transition-all duration-300 rounded-lg font-['DM_Sans']"
+            >
               <Link href="/admissions">Apply Now</Link>
             </Button>
           </div>
