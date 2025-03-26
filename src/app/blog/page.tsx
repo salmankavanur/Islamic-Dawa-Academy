@@ -16,8 +16,10 @@ async function fetchBlogPosts() {
     const url = `${baseUrl}/api/admin/blog?published=true`;
     console.log('Fetching from:', url);
     // const res = await fetch("/api/admin/blog?published=true", { cache: 'no-store' });
+    // const res =await fetch('/api/admin/blog?published=true');
 
     const res = await fetch(url, { cache: 'no-store' });
+    
 
     if (!res.ok) {
       throw new Error(`Failed to fetch blog posts: ${res.status} ${res.statusText}`);
