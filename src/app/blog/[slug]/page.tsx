@@ -98,6 +98,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
             <div className="max-w-4xl mx-auto">
               <article className="bg-white rounded-lg shadow-md overflow-hidden">
                 <div className="h-96 relative">
+                  
                   <img src={post.image} alt={post.title} className="w-full h-full object-cover" />
                 </div>
                 <div className="p-8">
