@@ -12,8 +12,14 @@ export default function NewBlogPostPage() {
     slug: '',
     content: '',
     excerpt: '',
-    featuredImage: '',
+    image: '',
+    category: '',
+    tags: '',
     author: 'Administrator',
+    authorTitle: '',
+    authorBio: '',
+    authorImage: '',
+    featured: false,
     published: false,
   });
   const [loading, setLoading] = useState(false);
@@ -22,7 +28,6 @@ export default function NewBlogPostPage() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
     
-    // Generate slug from title
     if (name === 'title') {
       const slug = value
         .toLowerCase()
@@ -33,6 +38,11 @@ export default function NewBlogPostPage() {
         ...formData,
         title: value,
         slug,
+      });
+    } else if (name === 'tags') {
+      setFormData({
+        ...formData,
+        tags: value,
       });
     } else {
       setFormData({
@@ -51,7 +61,6 @@ export default function NewBlogPostPage() {
       setLoading(true);
       setError(null);
       
-      // Validate form data
       if (!formData.title.trim()) {
         throw new Error('Title is required');
       }
@@ -60,7 +69,16 @@ export default function NewBlogPostPage() {
         throw new Error('Content is required');
       }
       
-      // Create new blog post
+      if (!formData.author.trim()) {
+        throw new Error('Author is required');
+      }
+
+      // Convert tags string to array
+      const tagsArray = formData.tags
+        .split(',')
+        .map(tag => tag.trim())
+        .filter(tag => tag.length > 0);
+
       const response = await fetch('/api/admin/blog', {
         method: 'POST',
         headers: {
@@ -68,16 +86,16 @@ export default function NewBlogPostPage() {
         },
         body: JSON.stringify({
           ...formData,
+          tags: tagsArray,
           date: new Date().toISOString(),
         }),
       });
       
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to create blog post');
+        throw new Error(errorData.error || 'Failed to create blog post');
       }
       
-      // Redirect to blog management page
       router.push('/admin/blog');
     } catch (err) {
       console.error('Error creating blog post:', err);
@@ -108,6 +126,7 @@ export default function NewBlogPostPage() {
 
       <div className="bg-white rounded-lg shadow-sm overflow-hidden">
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
+          {/* Title and Slug */}
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             <div className="space-y-2">
               <label htmlFor="title" className="block text-sm font-medium text-gray-700">
@@ -140,7 +159,8 @@ export default function NewBlogPostPage() {
               <p className="text-xs text-gray-500">URL-friendly version of the title</p>
             </div>
           </div>
-          
+
+          {/* Excerpt */}
           <div className="space-y-2">
             <label htmlFor="excerpt" className="block text-sm font-medium text-gray-700">
               Excerpt
@@ -152,10 +172,11 @@ export default function NewBlogPostPage() {
               onChange={handleChange}
               rows={3}
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500"
-              placeholder="Brief summary of the blog post (optional)"
+              placeholder="Brief summary of the blog post"
             />
           </div>
-          
+
+          {/* Content */}
           <div className="space-y-2">
             <label htmlFor="content" className="block text-sm font-medium text-gray-700">
               Content <span className="text-red-500">*</span>
@@ -170,50 +191,157 @@ export default function NewBlogPostPage() {
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500"
             />
           </div>
-          
-          <div className="space-y-2">
-            <label htmlFor="featuredImage" className="block text-sm font-medium text-gray-700">
-              Featured Image URL
-            </label>
-            <input
-              type="url"
-              id="featuredImage"
-              name="featuredImage"
-              value={formData.featuredImage}
-              onChange={handleChange}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500"
-              placeholder="https://example.com/image.jpg"
-            />
+
+          {/* Image and Category */}
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            <div className="space-y-2">
+              <label htmlFor="image" className="block text-sm font-medium text-gray-700">
+                Featured Image URL
+              </label>
+              <input
+                type="url"
+                id="image"
+                name="image"
+                value={formData.image}
+                onChange={handleChange}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500"
+                placeholder="https://example.com/image.jpg"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label htmlFor="category" className="block text-sm font-medium text-gray-700">
+                Category
+              </label>
+              <input
+                type="text"
+                id="category"
+                name="category"
+                value={formData.category}
+                onChange={handleChange}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500"
+              />
+            </div>
           </div>
-          
+
+          {/* Tags */}
           <div className="space-y-2">
-            <label htmlFor="author" className="block text-sm font-medium text-gray-700">
-              Author
+            <label htmlFor="tags" className="block text-sm font-medium text-gray-700">
+              Tags
             </label>
             <input
               type="text"
-              id="author"
-              name="author"
-              value={formData.author}
+              id="tags"
+              name="tags"
+              value={formData.tags}
               onChange={handleChange}
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500"
+              placeholder="Enter tags separated by commas (e.g., tech, news, tutorial)"
             />
           </div>
-          
-          <div className="flex items-center">
-            <input
-              type="checkbox"
-              id="published"
-              name="published"
-              checked={formData.published as boolean}
-              onChange={(e) => setFormData({...formData, published: e.target.checked})}
-              className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
-            />
-            <label htmlFor="published" className="ml-2 block text-sm text-gray-900">
-              Publish immediately
-            </label>
+
+          {/* Author Information */}
+          <div className="space-y-4 border-t pt-4">
+            <h3 className="text-lg font-medium text-gray-900">Author Information</h3>
+            
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+              <div className="space-y-2">
+                <label htmlFor="author" className="block text-sm font-medium text-gray-700">
+                  Author Name <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="author"
+                  name="author"
+                  value={formData.author}
+                  onChange={handleChange}
+                  required
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label htmlFor="authorTitle" className="block text-sm font-medium text-gray-700">
+                  Author Title
+                </label>
+                <input
+                  type="text"
+                  id="authorTitle"
+                  name="authorTitle"
+                  value={formData.authorTitle}
+                  onChange={handleChange}
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500"
+                  placeholder="e.g., Senior Editor"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <label htmlFor="authorBio" className="block text-sm font-medium text-gray-700">
+                Author Bio
+              </label>
+              <textarea
+                id="authorBio"
+                name="authorBio"
+                value={formData.authorBio}
+                onChange={handleChange}
+                rows={3}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500"
+                placeholder="Short biography of the author"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label htmlFor="authorImage" className="block text-sm font-medium text-gray-700">
+                Author Image URL
+              </label>
+              <input
+                type="url"
+                id="authorImage"
+                name="authorImage"
+                value={formData.authorImage}
+                onChange={handleChange}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500"
+                placeholder="https://example.com/author-image.jpg"
+              />
+            </div>
           </div>
-          
+
+          {/* Status Options */}
+          <div className="space-y-4 border-t pt-4">
+            <h3 className="text-lg font-medium text-gray-900">Status</h3>
+            <div className="flex space-x-6">
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  id="published"
+                  name="published"
+                  checked={formData.published}
+                  onChange={handleChange}
+                  className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
+                />
+                <label htmlFor="published" className="ml-2 block text-sm text-gray-900">
+                  Publish immediately
+                </label>
+              </div>
+
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  id="featured"
+                  name="featured"
+                  checked={formData.featured}
+                  onChange={handleChange}
+                  className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
+                />
+                <label htmlFor="featured" className="ml-2 block text-sm text-gray-900">
+                  Mark as featured
+                </label>
+              </div>
+            </div>
+          </div>
+
+          {/* Submit Buttons */}
           <div className="flex justify-end pt-5">
             <Link
               href="/admin/blog"
