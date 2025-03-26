@@ -43,7 +43,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   };
   
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="flex min-h-screen bg-gray-100">
       {/* Mobile Sidebar Backdrop */}
       {sidebarOpen && (
         <div 
@@ -52,24 +52,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         ></div>
       )}
       
-      {/* Mobile Header */}
-      <div className="lg:hidden bg-white shadow-sm py-4 px-6 flex items-center justify-between">
-        <Link href="/admin/dashboard" className="font-bold text-xl text-green-800">
-          Admin Panel
-        </Link>
-        <button 
-          onClick={toggleSidebar} 
-          className="text-gray-500 hover:text-gray-700 focus:outline-none"
-        >
-          <Menu size={24} />
-        </button>
-      </div>
-      
       {/* Sidebar */}
       <div 
         className={`fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out ${
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-        } lg:translate-x-0 lg:static lg:h-screen`}
+        } lg:translate-x-0 lg:relative lg:h-screen`}
       >
         <div className="p-6 flex flex-col h-full">
           {/* Sidebar Header */}
@@ -134,9 +121,25 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         </div>
       </div>
       
+      {/* Mobile Header */}
+      <div className="lg:hidden bg-white shadow-sm py-4 px-6 fixed top-0 left-0 right-0 z-30">
+        <div className="flex items-center justify-between">
+          <Link href="/admin/dashboard" className="font-bold text-xl text-green-800">
+            Admin Panel
+          </Link>
+          <button 
+            onClick={toggleSidebar} 
+            className="text-gray-500 hover:text-gray-700 focus:outline-none"
+          >
+            <Menu size={24} />
+          </button>
+        </div>
+      </div>
+      
       {/* Main Content */}
-      <div className="lg:ml-64">
-        <div className="p-6">
+      <div className="flex-1 lg:ml-0">
+        {/* Add top padding only on mobile */}
+        <div className="p-6 lg:p-6 mt-16 lg:mt-0">
           {children}
         </div>
       </div>
