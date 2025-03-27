@@ -3,49 +3,72 @@ import { getServerSession } from 'next-auth';
 import connectToDatabase from '@/lib/mongodb';
 import BlogPost from '@/models/BlogPost';
 
-export const dynamic = 'force-dynamic'; // Ensure this API route is dynamic
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
+// Define types for better TypeScript support
+interface FilterOptions {
+  published?: boolean;
+  featured?: boolean;
+  category?: string;
+  tags?: { $in: string[] };
+}
 
 export async function GET(request: NextRequest) {
   try {
     await connectToDatabase();
+    const { searchParams } = new URL(request.url);
+    const slug = searchParams.get('slug');
 
-    const url = new URL(request.url);
-    const slug = url.searchParams.get('slug');
-
+    // Single post by slug
     if (slug) {
-      const post = await BlogPost.findOne({ slug });
+      const post = await BlogPost.findOne({ slug }).lean();
       return post
         ? NextResponse.json(post)
         : NextResponse.json({ error: 'Blog post not found' }, { status: 404 });
     }
 
-    const page = parseInt(url.searchParams.get('page') || '1');
-    const limit = parseInt(url.searchParams.get('limit') || '10');
+    // Pagination parameters
+    const page = parseInt(searchParams.get('page') || '1', 10);
+    const limit = parseInt(searchParams.get('limit') || '10', 10);
     const skip = (page - 1) * limit;
 
-    const filterOptions: any = {};
-    const publishedParam = url.searchParams.get('published');
-    if (publishedParam !== null) filterOptions.published = publishedParam === 'true';
-    const featuredParam = url.searchParams.get('featured');
-    if (featuredParam !== null) filterOptions.featured = featuredParam === 'true';
-    const category = url.searchParams.get('category');
+    // Build filter options
+    const filterOptions: FilterOptions = {};
+    const published = searchParams.get('published');
+    if (published !== null) filterOptions.published = published === 'true';
+    const featured = searchParams.get('featured');
+    if (featured !== null) filterOptions.featured = featured === 'true';
+    const category = searchParams.get('category');
     if (category) filterOptions.category = category;
-    const tag = url.searchParams.get('tag');
+    const tag = searchParams.get('tag');
     if (tag) filterOptions.tags = { $in: [tag] };
 
-    const total = await BlogPost.countDocuments(filterOptions);
-    const posts = await BlogPost.find(filterOptions)
-      .sort({ createdAt: -1 })
-      .skip(skip)
-      .limit(limit);
+    // Fetch posts with pagination
+    const [total, posts] = await Promise.all([
+      BlogPost.countDocuments(filterOptions),
+      BlogPost.find(filterOptions)
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit)
+        .lean(),
+    ]);
 
     return NextResponse.json({
       posts,
-      pagination: { total, page, limit, pages: Math.ceil(total / limit) },
+      pagination: {
+        total,
+        page,
+        limit,
+        pages: Math.ceil(total / limit),
+      },
     });
   } catch (error) {
     console.error('Error fetching blog posts:', error);
-    return NextResponse.json({ error: 'Failed to fetch blog posts' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Internal Server Error' },
+      { status: 500 }
+    );
   }
 }
 
@@ -59,22 +82,35 @@ export async function POST(request: NextRequest) {
     await connectToDatabase();
     const data = await request.json();
 
-    const existingPost = await BlogPost.findOne({ slug: data.slug });
-    if (existingPost) {
-      return NextResponse.json({ error: 'A blog post with this slug already exists' }, { status: 409 });
+    // Validate required fields
+    if (!data.title || !data.slug) {
+      return NextResponse.json(
+        { error: 'Title and slug are required' },
+        { status: 400 }
+      );
     }
 
-    const newPost = new BlogPost({
+    // Check for existing slug
+    if (await BlogPost.exists({ slug: data.slug })) {
+      return NextResponse.json(
+        { error: 'Slug already exists' },
+        { status: 409 }
+      );
+    }
+
+    const newPost = await BlogPost.create({
       ...data,
       createdAt: new Date(),
       updatedAt: new Date(),
     });
 
-    await newPost.save();
     return NextResponse.json(newPost, { status: 201 });
   } catch (error) {
     console.error('Error creating blog post:', error);
-    return NextResponse.json({ error: 'Failed to create blog post' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Internal Server Error' },
+      { status: 500 }
+    );
   }
 }
 
@@ -90,23 +126,32 @@ export async function PUT(request: NextRequest) {
     const { id, ...updateData } = data;
 
     if (!id) {
-      return NextResponse.json({ error: 'Blog post ID is required' }, { status: 400 });
+      return NextResponse.json(
+        { error: 'Blog post ID is required' },
+        { status: 400 }
+      );
     }
 
     const updatedPost = await BlogPost.findByIdAndUpdate(
       id,
       { ...updateData, updatedAt: new Date() },
-      { new: true }
+      { new: true, lean: true }
     );
 
     if (!updatedPost) {
-      return NextResponse.json({ error: 'Blog post not found' }, { status: 404 });
+      return NextResponse.json(
+        { error: 'Blog post not found' },
+        { status: 404 }
+      );
     }
 
     return NextResponse.json(updatedPost);
   } catch (error) {
     console.error('Error updating blog post:', error);
-    return NextResponse.json({ error: 'Failed to update blog post' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Internal Server Error' },
+      { status: 500 }
+    );
   }
 }
 
@@ -118,21 +163,30 @@ export async function DELETE(request: NextRequest) {
     }
 
     await connectToDatabase();
-    const url = new URL(request.url);
-    const id = url.searchParams.get('id');
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get('id');
 
     if (!id) {
-      return NextResponse.json({ error: 'Blog post ID is required' }, { status: 400 });
+      return NextResponse.json(
+        { error: 'Blog post ID is required' },
+        { status: 400 }
+      );
     }
 
     const deletedPost = await BlogPost.findByIdAndDelete(id);
     if (!deletedPost) {
-      return NextResponse.json({ error: 'Blog post not found' }, { status: 404 });
+      return NextResponse.json(
+        { error: 'Blog post not found' },
+        { status: 404 }
+      );
     }
 
     return NextResponse.json({ message: 'Blog post deleted successfully' });
   } catch (error) {
     console.error('Error deleting blog post:', error);
-    return NextResponse.json({ error: 'Failed to delete blog post' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Internal Server Error' },
+      { status: 500 }
+    );
   }
 }

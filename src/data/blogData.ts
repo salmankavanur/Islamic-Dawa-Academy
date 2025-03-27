@@ -65,7 +65,8 @@ const blogPosts: BlogPost[] = [
     category: "Education",
     image: "https://images.unsplash.com/photo-1577996693134-dd0082fb9031?q=80&w=1000",
     featured: true,
-    tags: ["Islamic Education", "Dual Degree", "Modern Scholarship"]
+    tags: ["Islamic Education", "Dual Degree", "Modern Scholarship"],
+    authorImage: undefined
   },
   {
     id: 2,
@@ -106,7 +107,8 @@ const blogPosts: BlogPost[] = [
     category: "Quran Studies",
     image: "https://images.unsplash.com/photo-1609599006353-e629aaabfeae?q=80&w=1000",
     featured: false,
-    tags: ["Quran Memorization", "Hifz", "Teaching Methods"]
+    tags: ["Quran Memorization", "Hifz", "Teaching Methods"],
+    authorImage: undefined
   },
   {
     id: 3,
@@ -147,7 +149,8 @@ const blogPosts: BlogPost[] = [
     category: "Media & Technology",
     image: "https://images.unsplash.com/photo-1573152143286-0c422b4d2175?q=80&w=1000",
     featured: false,
-    tags: ["Islamic Media", "Digital Da'wah", "Content Creation"]
+    tags: ["Islamic Media", "Digital Da'wah", "Content Creation"],
+    authorImage: undefined
   },
   {
     id: 4,
@@ -188,7 +191,8 @@ const blogPosts: BlogPost[] = [
     category: "Quran Studies",
     image: "https://images.unsplash.com/photo-1616964524009-36209254476d?q=80&w=1000",
     featured: false,
-    tags: ["Tajweed", "Quran Recitation", "Pronunciation"]
+    tags: ["Tajweed", "Quran Recitation", "Pronunciation"],
+    authorImage: undefined
   },
   {
     id: 5,
@@ -229,7 +233,8 @@ const blogPosts: BlogPost[] = [
     category: "Leadership",
     image: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=1000",
     featured: true,
-    tags: ["Muslim Leadership", "Youth Development", "Islamic Identity"]
+    tags: ["Muslim Leadership", "Youth Development", "Islamic Identity"],
+    authorImage: undefined
   },
   {
     id: 6,
@@ -270,7 +275,8 @@ const blogPosts: BlogPost[] = [
     category: "Islamic Ethics",
     image: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1000",
     featured: false,
-    tags: ["Islamic Ethics", "Professional Life", "Workplace"]
+    tags: ["Islamic Ethics", "Professional Life", "Workplace"],
+    authorImage: undefined
   }
 ];
 
