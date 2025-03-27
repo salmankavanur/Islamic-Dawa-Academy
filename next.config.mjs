@@ -1,37 +1,36 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Other Next.js config option
+  // Enable React strict mode for better error detection
   reactStrictMode: true,
 
-  // Note: For admin panel + API routes, we need to use server-side rendering
-  // We'll set this in environment specific configurations
-  output: process.env.EXPORT_MODE === 'true' ? 'export' : undefined,
-  distDir: 'out',
-
-  // Configure images for static export
+  // Images configuration
   images: {
-    unoptimized: true,
+    // Domains for external image sources
     domains: ['randomuser.me', 'media.gettyimages.com'],
+    // Allow any HTTPS image source with wildcard pattern
     remotePatterns: [
       {
         protocol: 'https',
         hostname: '**',
       },
     ],
+    // Allow SVG images (use cautiously due to security risks)
     dangerouslyAllowSVG: true,
+    // Security policy for images
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    // Keep static image generation enabled
     disableStaticImages: false,
   },
+
+  // TypeScript configuration
   typescript: {
-    // !! WARN !!
-    // Dangerously allow production builds to successfully complete even if
-    // your project has type errors.
-    // !! WARN !!
+    // Allow builds to complete despite TypeScript errors (temporary workaround)
     ignoreBuildErrors: true,
   },
+
+  // ESLint configuration
   eslint: {
-    // Warning: This allows production builds to successfully complete even if
-    // your project has ESLint errors.
+    // Allow builds to complete despite ESLint errors (temporary workaround)
     ignoreDuringBuilds: true,
   },
 };
