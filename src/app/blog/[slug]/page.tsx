@@ -7,9 +7,10 @@ import { notFound } from "next/navigation";
 
 async function fetchBlogPost(slug: string) {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-    const url = `${baseUrl}/api/admin/blog?slug=${slug}`;
-    const res = await fetch(url, { cache: 'no-store' });
+    // const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+    // const url = `${baseUrl}/api/admin/blog?slug=${slug}`;
+    // const res = await fetch(url, { cache: 'no-store' });
+    const res=await fetch('/api/admin/blog?slug=${slug}')
 
     if (!res.ok) {
       throw new Error(`Failed to fetch blog post: ${res.status} ${res.statusText}`);
@@ -25,9 +26,10 @@ async function fetchBlogPost(slug: string) {
 
 async function fetchAllBlogPosts() {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-    const url = `${baseUrl}/api/admin/blog?published=true`;
-    const res = await fetch(url, { cache: 'no-store' });
+    // const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+    // const url = `${baseUrl}/api/admin/blog?published=true`;
+    // const res = await fetch(url, { cache: 'no-store' });
+    const res=await fetch("/api/admin/blog?publised=true")
 
     if (!res.ok) {
       throw new Error(`Failed to fetch blog posts: ${res.status} ${res.statusText}`);
