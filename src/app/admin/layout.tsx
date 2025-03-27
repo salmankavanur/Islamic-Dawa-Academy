@@ -13,7 +13,8 @@ import {
   Settings,
   ChevronRight,
   User,
-  X
+  X,
+  Upload // Added Upload icon for Media Management
 } from 'lucide-react';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -31,6 +32,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     { name: 'Dashboard', href: '/admin/dashboard', icon: Home },
     { name: 'Blog Posts', href: '/admin/blog', icon: Newspaper },
     { name: 'Gallery', href: '/admin/gallery', icon: Image },
+    { name: 'Media Management', href: '/admin/media', icon: Upload }, // Added Media Management
     { name: 'Settings', href: '/admin/settings', icon: Settings },
   ];
   
