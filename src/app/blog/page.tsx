@@ -5,10 +5,10 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import blogPostsStatic from "@/data/blogData";
 
-// Define Post interface with proper typing
+// Define Post interface
 interface BlogPost {
   _id?: string;
-  id?: number;
+  id?: string;
   title: string;
   slug: string;
   excerpt: string;
@@ -26,12 +26,32 @@ export const metadata: Metadata = {
   description: "Explore articles, insights, and educational content from the Islamic Da'wa Academy.",
 };
 
+// Mark the page as dynamic to avoid static rendering issues on Vercel
+export const dynamic = 'force-dynamic';
+
+// Function to normalize blog post data
+const normalizeBlogPost = (post: any): BlogPost => ({
+  ...post,
+  id: post.id?.toString() ?? post._id, // Convert number to string if needed
+  _id: post._id?.toString(),
+  title: post.title || "Untitled",
+  slug: post.slug || "",
+  excerpt: post.excerpt || "",
+  image: post.image || "/placeholder-image.jpg",
+  category: post.category || "Uncategorized",
+  author: post.author || "Anonymous",
+  date: post.date || "Date not available",
+  tags: post.tags || [],
+  featured: post.featured || false,
+  published: post.published ?? true,
+});
+
 async function fetchBlogPosts(): Promise<BlogPost[]> {
   try {
-    const res = await fetch("/api/admin/blog?published=true", {
-      cache: "no-store",
+    const res = await fetch('/api/admin/blog?published=true', {
+      cache: 'no-store', // Forces fresh data on each request
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     });
 
@@ -40,10 +60,10 @@ async function fetchBlogPosts(): Promise<BlogPost[]> {
     }
 
     const data = await res.json();
-    return Array.isArray(data.posts) ? data.posts : [];
+    return Array.isArray(data.posts) ? data.posts.map(normalizeBlogPost) : [];
   } catch (error) {
-    console.error("Error fetching blog posts:", error);
-    return Array.isArray(blogPostsStatic) ? blogPostsStatic : [];
+    console.error('Error fetching blog posts:', error);
+    return Array.isArray(blogPostsStatic) ? blogPostsStatic.map(normalizeBlogPost) : [];
   }
 }
 
@@ -80,12 +100,12 @@ export default async function BlogPage() {
                   >
                     <div className="relative h-64">
                       <img
-                        src={post.image || "/placeholder-image.jpg"}
+                        src={post.image}
                         alt={post.title}
                         className="w-full h-full object-cover"
                       />
                       <span className="absolute top-4 left-4 bg-green-600 text-white text-xs font-semibold px-3 py-1 rounded-full">
-                        {post.category || "Uncategorized"}
+                        {post.category}
                       </span>
                     </div>
                     <div className="p-6 flex flex-col flex-grow">
@@ -95,7 +115,7 @@ export default async function BlogPage() {
                         </Link>
                       </h3>
                       <p className="text-gray-500 text-sm mb-4">
-                        By {post.author || "Anonymous"} | {post.date || "Date not available"}
+                        By {post.author} | {post.date}
                       </p>
                       <p className="text-gray-600 mb-6 flex-grow">{post.excerpt}</p>
                       <Link href={`/blog/${post.slug}`}>
@@ -128,12 +148,12 @@ export default async function BlogPage() {
                   >
                     <div className="relative h-48">
                       <img
-                        src={post.image || "/placeholder-image.jpg"}
+                        src={post.image}
                         alt={post.title}
                         className="w-full h-full object-cover"
                       />
                       <span className="absolute top-4 left-4 bg-green-600 text-white text-xs font-semibold px-3 py-1 rounded-full">
-                        {post.category || "Uncategorized"}
+                        {post.category}
                       </span>
                     </div>
                     <div className="p-6 flex flex-col flex-grow">
@@ -143,7 +163,7 @@ export default async function BlogPage() {
                         </Link>
                       </h3>
                       <p className="text-gray-500 text-sm mb-4">
-                        By {post.author || "Anonymous"} | {post.date || "Date not available"}
+                        By {post.author} | {post.date}
                       </p>
                       <p className="text-gray-600 mb-6 flex-grow line-clamp-3">
                         {post.excerpt}
